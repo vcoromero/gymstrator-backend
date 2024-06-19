@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/vcoromero/gymstration-backend/database"
 
 func main() {
-	fmt.Println("COOMING SOON GYMSTRATION API")
+	database.Connect()
 }

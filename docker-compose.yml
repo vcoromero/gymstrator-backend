@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:8.0
+    container_name: gymstration-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pswrd
+      MYSQL_DATABASE: gymstration
+      MYSQL_USER: gymstrator
+      MYSQL_PASSWORD: gymstrator_pswrd
+    ports:
+      - "3306:3306"
+    volumes:
+      - gymstration-data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - gymstration-db-network
+
+volumes:
+  gymstration-data:
+
+networks:
+  gymstration-db-network:

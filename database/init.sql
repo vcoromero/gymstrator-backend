@@ -8,7 +8,7 @@ FLUSH PRIVILEGES;
 
 CREATE TABLE IF NOT EXISTS roles (
     id CHAR(36) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL
@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS roles (
 
 CREATE TABLE IF NOT EXISTS functions (
     id CHAR(36) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL
@@ -33,11 +34,14 @@ CREATE TABLE IF NOT EXISTS rolefunctions (
 CREATE TABLE IF NOT EXISTS users (
     id CHAR(36) PRIMARY KEY,
     user_code INT AUTO_INCREMENT UNIQUE NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    second_name VARCHAR(50) NULL DEFAULT NULL,
+    surname VARCHAR(50) NOT NULL,
+    second_surname VARCHAR(50) NULL DEFAULT NULL,
+    email VARCHAR(60) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role_id CHAR(36),
-    pin VARCHAR(255) UNIQUE NOT NULL,
+    pin VARCHAR(6) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL,
@@ -56,8 +60,8 @@ CREATE TABLE IF NOT EXISTS selfies (
 
 CREATE TABLE IF NOT EXISTS memberships (
     id CHAR(36) PRIMARY KEY,
-    type VARCHAR(255) NOT NULL,
-    description TEXT,
+    type VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     duration INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -81,7 +85,7 @@ CREATE TABLE IF NOT EXISTS contracts (
     membership_id CHAR(36),
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
-    status VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL,
@@ -99,3 +103,43 @@ INSERT INTO roles (id, name) VALUES (UUID(), 'admin');
 INSERT INTO roles (id, name) VALUES (UUID(), 'employee');
 INSERT INTO roles (id, name) VALUES (UUID(), 'trainer');
 INSERT INTO roles (id, name) VALUES (UUID(), 'member');
+INSERT INTO roles (id, name) VALUES (UUID(), 'visitor');
+
+
+INSERT INTO functions (id, name, description) VALUES
+(UUID(), 'manage_roles', 'Manage user roles and permissions'),
+(UUID(), 'manage_functions', 'Manage system functions and capabilities'),
+(UUID(), 'manage_roles_functions', 'Manage role functions and permissions'),
+(UUID(), 'manage_admins', 'Manage administrators of the system'),
+(UUID(), 'manage_employees', 'Manage gym employees'),
+(UUID(), 'manage_trainers', 'Manage gym trainers'),
+(UUID(), 'manage_members', 'Manage gym members'),
+(UUID(), 'manage_visitors', 'Manage gym visitors'),
+(UUID(), 'manage_selfies', 'Manage user selfies'),
+(UUID(), 'manage_memberships', 'Manage gym memberships'),
+(UUID(), 'manage_accesslogs', 'Manage user access logs'),
+(UUID(), 'manage_contracts', 'Manage user contracts');
+
+INSERT INTO rolefunctions (role_id, function_id)
+SELECT
+    (SELECT id FROM roles WHERE name = 'superuser'),
+    id
+FROM functions
+WHERE name IN (
+    'manage_roles',
+    'manage_functions',
+    'manage_roles_functions',
+    'manage_admins',
+    'manage_employees',
+    'manage_trainers',
+    'manage_members',
+    'manage_visitors',
+    'manage_selfies',
+    'manage_memberships',
+    'manage_accesslogs',
+    'manage_contracts'
+);
+
+INSERT INTO users (id, name, surname, email, password, role_id, pin) 
+VALUES (UUID(), 'Super','User', 'superuser@gymstration.dev', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 
+(SELECT id FROM roles WHERE name = 'superuser'), '123456');

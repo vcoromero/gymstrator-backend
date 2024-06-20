@@ -6,12 +6,14 @@ import (
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
+	cfg "github.com/vcoromero/gymstration-backend/config"
 )
 
 func Connect() {
-	dsn := "gymstrator:gymstrator_pswrd@tcp(127.0.0.1:3306)/gymstration"
+	databaseConnectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", cfg.DbUser, cfg.DbPassword, cfg.DbHost, cfg.DbPort, cfg.DbName)
+	databaseConnectionUri := databaseConnectionString
 
-	db, err := sql.Open("mysql", dsn)
+	db, err := sql.Open("mysql", databaseConnectionUri)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -22,5 +24,5 @@ func Connect() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Connected to the database!")
+	log.Println("Connected to the database!")
 }

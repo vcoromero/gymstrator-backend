@@ -4,10 +4,10 @@ services:
     image: mysql:8.0
     container_name: gymstration-db
     environment:
-      MYSQL_ROOT_PASSWORD: root_pswrd
-      MYSQL_DATABASE: gymstration
-      MYSQL_USER: gymstrator
-      MYSQL_PASSWORD: gymstrator_pswrd
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
     volumes:

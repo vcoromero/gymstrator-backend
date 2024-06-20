@@ -1,0 +1,19 @@
+# Config file for Air
+[build]
+  bin = "./tmp/main" # Path to binary file built by `go build`
+  cmd = "go build -o ./tmp/main" # Command to build your project
+  include_ext = ["go", "tmpl", "html"] # Extensions to trigger rebuild
+  exclude_dir = ["assets", "tmp", "vendor"] # Directories to exclude from watching
+  exclude_file = [] # Files to exclude from watching
+  exclude_regex = ["_test\\.go"] # Regex for files to exclude from watching
+  follow_symlink = true # Follow symlink
+  dir = "." # Root directory to watch
+
+[run]
+  cmd = "./tmp/main" # Command to run the binary file
+  restart_on_error = true # Restart if the process exits with an error
+
+[log]
+  color = "auto" # Colorize log output ("auto", "always", "never")
+  level = "info" # Log level ("debug", "info", "warn", "error")
+  time = false # Print timestamp in log output

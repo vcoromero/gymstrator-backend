@@ -12,6 +12,7 @@ var DbPassword string
 var DbHost string
 var DbPort string
 var DbName string
+var ServerPort string
 
 func Init() {
 	err := godotenv.Load()
@@ -24,6 +25,7 @@ func Init() {
 	DbHost = os.Getenv("DB_HOST")
 	DbPort = os.Getenv("DB_PORT")
 	DbName = os.Getenv("DB_NAME")
+	ServerPort = os.Getenv("SERVER_PORT")
 
 	log.Println("Config initialized")
 }

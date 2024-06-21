@@ -38,3 +38,11 @@ func UpdateRole(ctx context.Context, id string, name string) (models.Role, error
 	}
 	return role, nil
 }
+
+func DeleteRole(ctx context.Context, id string) error {
+	err := repositories.DeleteRole(ctx, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/vcoromero/gymstration-backend/database"
@@ -78,4 +79,16 @@ func UpdateRole(ctx context.Context, id string, name string) (models.Role, error
 	}
 
 	return role, nil
+}
+
+func DeleteRole(ctx context.Context, id string) error {
+	deletedAt := time.Now()
+	query := "UPDATE roles SET deleted_at = ? WHERE id = ?"
+	_, err := database.DB.ExecContext(ctx, query, deletedAt, id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

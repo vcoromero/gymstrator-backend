@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/vcoromero/gymstration-backend/config"
 	"github.com/vcoromero/gymstration-backend/database"
-	"github.com/vcoromero/gymstration-backend/src/handlers"
+	"github.com/vcoromero/gymstration-backend/src/routes"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	database.Connect()
 
 	r := mux.NewRouter()
-	r.HandleFunc("/roles", handlers.GetRoles).Methods("GET")
+	routes.RegisterRoutes(r)
 
 	port := ":" + config.ServerPort
 	log.Printf("Starting server on %s\n", port)

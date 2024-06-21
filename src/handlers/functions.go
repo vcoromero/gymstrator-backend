@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+<<<<<<< HEAD
 	"github.com/gorilla/mux"
 	"github.com/vcoromero/gymstration-backend/config"
 	"github.com/vcoromero/gymstration-backend/src/models"
@@ -126,6 +127,16 @@ func DeleteFunction(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response.Message = "Function deleted successfully"
+=======
+	"github.com/vcoromero/gymstration-backend/config"
+	"github.com/vcoromero/gymstration-backend/src/models"
+)
+
+func GetFunction(w http.ResponseWriter, r *http.Request) {
+	var response models.ResponseAPI
+
+	response.Message = "First function endpoint done!"
+>>>>>>> 67b1c8c (improvements for role endpoints)
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	json.NewEncoder(w).Encode(response)

@@ -32,7 +32,7 @@ Thumbs.db
 go.work
 
 # Ignorar la carpeta tmp y todo su contenido
-/tmp
+/tmp/
 
 # Ignorar el archivo build-errors.log
 /build-errors.log

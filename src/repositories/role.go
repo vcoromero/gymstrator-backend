@@ -62,3 +62,20 @@ func CreateRole(ctx context.Context, name string) (models.Role, error) {
 
 	return role, nil
 }
+
+func UpdateRole(ctx context.Context, id string, name string) (models.Role, error) {
+	var role models.Role
+
+	query := "UPDATE roles SET name = ? WHERE id = ?"
+	_, err := database.DB.ExecContext(ctx, query, name, id)
+	if err != nil {
+		return models.Role{}, err
+	}
+
+	role, err = GetRoleById(ctx, id)
+	if err != nil {
+		return models.Role{}, err
+	}
+
+	return role, nil
+}

@@ -30,3 +30,11 @@ func CreateRole(ctx context.Context, name string) (models.Role, error) {
 	}
 	return role, nil
 }
+
+func UpdateRole(ctx context.Context, id string, name string) (models.Role, error) {
+	role, err := repositories.UpdateRole(ctx, id, name)
+	if err != nil {
+		return models.Role{}, err
+	}
+	return role, nil
+}

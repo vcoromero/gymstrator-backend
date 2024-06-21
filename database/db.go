@@ -9,6 +9,8 @@ import (
 	cfg "github.com/vcoromero/gymstration-backend/config"
 )
 
+var DB *sql.DB
+
 func Connect() {
 	databaseConnectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", cfg.DbUser, cfg.DbPassword, cfg.DbHost, cfg.DbPort, cfg.DbName)
 	databaseConnectionUri := databaseConnectionString
@@ -17,12 +19,11 @@ func Connect() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
-
 	err = db.Ping()
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	DB = db
 	log.Println("Connected to the database!")
 }

@@ -9,12 +9,16 @@ import (
 
 func RegisterRoutes(r *mux.Router) {
 	apiRouterV1 := r.PathPrefix("/api/v1").Subrouter()
+	rolesRouter := apiRouterV1.PathPrefix("/roles").Subrouter()
+	functionsRouter := apiRouterV1.PathPrefix("/functions").Subrouter()
 
-	apiRouterV1.HandleFunc("/roles/{id}", handlers.GetRoleById).Methods("GET")
-	apiRouterV1.HandleFunc("/roles", handlers.GetRoles).Methods("GET")
-	apiRouterV1.HandleFunc("/roles", handlers.CreateRole).Methods("POST")
-	apiRouterV1.HandleFunc("/roles/{id}", handlers.UpdateRole).Methods("PUT")
-	apiRouterV1.HandleFunc("/roles/{id}", handlers.DeleteRole).Methods("DELETE")
+	rolesRouter.HandleFunc("/{id}", handlers.GetRole).Methods("GET")
+	rolesRouter.HandleFunc("", handlers.GetRoles).Methods("GET")
+	rolesRouter.HandleFunc("", handlers.CreateRole).Methods("POST")
+	rolesRouter.HandleFunc("/{id}", handlers.UpdateRole).Methods("PUT")
+	rolesRouter.HandleFunc("/{id}", handlers.DeleteRole).Methods("DELETE")
+
+	functionsRouter.HandleFunc("", handlers.GetFunction).Methods("GET")
 
 	logRoutes(r)
 }

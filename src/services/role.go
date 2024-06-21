@@ -16,7 +16,7 @@ func GetRoles(ctx context.Context) ([]models.Role, error) {
 }
 
 func GetRole(ctx context.Context, id string) (models.Role, error) {
-	role, err := repositories.GetRoleById(ctx, id)
+	role, err := repositories.GetRole(ctx, id)
 	if err != nil {
 		return models.Role{}, err
 	}

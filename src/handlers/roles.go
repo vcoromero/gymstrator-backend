@@ -5,22 +5,31 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/vcoromero/gymstration-backend/config"
+	"github.com/vcoromero/gymstration-backend/src/models"
 	"github.com/vcoromero/gymstration-backend/src/services"
 )
 
 func GetRoles(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+	var response models.ResponseAPI
+
 	roles, err := services.GetRoles(ctx)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	response.Message = "Roles retrieved successfully"
+	response.Data = roles
+
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(roles)
+	json.NewEncoder(w).Encode(response)
 }
 
-func GetRoleById(w http.ResponseWriter, r *http.Request) {
+func GetRole(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+	var response models.ResponseAPI
 
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -35,8 +44,12 @@ func GetRoleById(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(role)
+
+	response.Message = "Role retrieved successfully"
+	response.Data = role
+
+	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
+	json.NewEncoder(w).Encode(response)
 }
 
 func CreateRole(w http.ResponseWriter, r *http.Request) {
@@ -50,13 +63,18 @@ func CreateRole(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	var response models.ResponseAPI
+
 	_, err := services.CreateRole(ctx, input.Name)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"message": "Role created successfully"})
+
+	response.Message = "Role created successfully"
+
+	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
+	json.NewEncoder(w).Encode(response)
 }
 
 func UpdateRole(w http.ResponseWriter, r *http.Request) {
@@ -76,14 +94,18 @@ func UpdateRole(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	var response models.ResponseAPI
+
 	_, err := services.UpdateRole(ctx, id, input.Name)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"message": "Role updated successfully"})
+	response.Message = "Role updated successfully"
+
+	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
+	json.NewEncoder(w).Encode(response)
 }
 
 func DeleteRole(w http.ResponseWriter, r *http.Request) {
@@ -95,12 +117,16 @@ func DeleteRole(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	var response models.ResponseAPI
+
 	err := services.DeleteRole(ctx, id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"message": "Role deleted successfully"})
+	response.Message = "Role deleted successfully"
+
+	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
+	json.NewEncoder(w).Encode(response)
 }

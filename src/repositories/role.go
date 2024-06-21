@@ -32,7 +32,7 @@ func FetchRoles(ctx context.Context) ([]models.Role, error) {
 	return roles, nil
 }
 
-func GetRoleById(ctx context.Context, id string) (models.Role, error) {
+func GetRole(ctx context.Context, id string) (models.Role, error) {
 	var role models.Role
 
 	query := "SELECT id, name, created_at, updated_at, deleted_at FROM roles WHERE id = ?"
@@ -56,7 +56,7 @@ func CreateRole(ctx context.Context, name string) (models.Role, error) {
 		return models.Role{}, err
 	}
 
-	role, err = GetRoleById(ctx, id)
+	role, err = GetRole(ctx, id)
 	if err != nil {
 		return models.Role{}, err
 	}
@@ -73,7 +73,7 @@ func UpdateRole(ctx context.Context, id string, name string) (models.Role, error
 		return models.Role{}, err
 	}
 
-	role, err = GetRoleById(ctx, id)
+	role, err = GetRole(ctx, id)
 	if err != nil {
 		return models.Role{}, err
 	}

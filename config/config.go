@@ -14,6 +14,9 @@ var DbPort string
 var DbName string
 var ServerPort string
 
+var HeaderContentType = "Content-Type"
+var ContentTypeJSON = "application/json"
+
 func Init() {
 	err := godotenv.Load()
 	if err != nil {

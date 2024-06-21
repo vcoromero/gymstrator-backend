@@ -30,3 +30,9 @@ Thumbs.db
 
 # Dependency files
 go.work
+
+# Ignorar la carpeta tmp y todo su contenido
+/tmp
+
+# Ignorar el archivo build-errors.log
+/build-errors.log

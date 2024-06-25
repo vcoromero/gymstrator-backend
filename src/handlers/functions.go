@@ -7,12 +7,21 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/vcoromero/gymstration-backend/config"
 	"github.com/vcoromero/gymstration-backend/src/models"
+	"github.com/vcoromero/gymstration-backend/src/services"
 )
 
 func GetFunctions(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
 	var response models.ResponseAPI
 
+	functions, err := services.GetFunctions(ctx)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	response.Message = "Function retrieved successfully"
+	response.Data = functions
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	json.NewEncoder(w).Encode(response)

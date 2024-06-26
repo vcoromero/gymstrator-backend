@@ -10,6 +10,11 @@ import (
 	"github.com/vcoromero/gymstration-backend/src/services"
 )
 
+var input struct {
+	Name       string `json:"name"`
+	Descripion string `json:"description"`
+}
+
 func GetFunctions(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var response models.ResponseAPI
@@ -28,6 +33,9 @@ func GetFunctions(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetFunction(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	var response models.ResponseAPI
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 
@@ -36,16 +44,33 @@ func GetFunction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var response models.ResponseAPI
+	function, err := services.GetFunction(ctx, id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	response.Message = "Function retrieved successfully"
+	response.Data = function
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	json.NewEncoder(w).Encode(response)
 }
 
 func CreateFunction(w http.ResponseWriter, r *http.Request) {
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	ctx := r.Context()
 	var response models.ResponseAPI
+
+	_, err := services.CreateFunction(ctx, input.Name, input.Descripion)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	response.Message = "Function created successfully"
 
@@ -62,7 +87,19 @@ func UpdateFunction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	ctx := r.Context()
 	var response models.ResponseAPI
+
+	_, err := services.UpdateFunction(ctx, id, input.Name, input.Descripion)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	response.Message = "Function updated successfully"
 
@@ -79,7 +116,14 @@ func DeleteFunction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ctx := r.Context()
 	var response models.ResponseAPI
+
+	err := services.DeleteFunction(ctx, id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	response.Message = "Function deleted successfully"
 

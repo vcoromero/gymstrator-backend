@@ -46,8 +46,8 @@ func GetFunction(ctx context.Context, id string) (models.Function, error) {
 func CreateFunction(ctx context.Context, name string, description string) (models.Function, error) {
 	id := uuid.New().String()
 
-	query := "INSERT INTO functions (name, description) VALUES (?,?)"
-	_, err := database.DB.ExecContext(ctx, query, name, description)
+	query := "INSERT INTO functions (id, name, description) VALUES (?, ?,?)"
+	_, err := database.DB.ExecContext(ctx, query, id, name, description)
 	if err != nil {
 		return models.Function{}, err
 	}

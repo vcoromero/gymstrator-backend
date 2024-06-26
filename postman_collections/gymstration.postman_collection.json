@@ -141,6 +141,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"new_function 2\",\n    \"description\": \"function description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}:{{port}}/api/{{v1}}/{{functionsPath}}",
 							"host": [
@@ -182,7 +191,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}:{{port}}/api/{{v1}}/{{functionsPath}}/123",
+							"raw": "{{url}}:{{port}}/api/{{v1}}/{{functionsPath}}/af8c53d0-6f8b-4c87-b2ca-6b8579ceda87",
 							"host": [
 								"{{url}}"
 							],
@@ -191,7 +200,7 @@
 								"api",
 								"{{v1}}",
 								"{{functionsPath}}",
-								"123"
+								"af8c53d0-6f8b-4c87-b2ca-6b8579ceda87"
 							]
 						}
 					},
@@ -202,8 +211,17 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"new_function 2\",\n    \"description\": \"function description 222222\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{url}}:{{port}}/api/{{v1}}/{{functionsPath}}/2313",
+							"raw": "{{url}}:{{port}}/api/{{v1}}/{{functionsPath}}/af8c53d0-6f8b-4c87-b2ca-6b8579ceda87",
 							"host": [
 								"{{url}}"
 							],
@@ -212,7 +230,7 @@
 								"api",
 								"{{v1}}",
 								"{{functionsPath}}",
-								"2313"
+								"af8c53d0-6f8b-4c87-b2ca-6b8579ceda87"
 							]
 						}
 					},
@@ -224,7 +242,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}:{{port}}/api/{{v1}}/{{functionsPath}}/2313",
+							"raw": "{{url}}:{{port}}/api/{{v1}}/{{functionsPath}}/ce317d33-705f-4e70-b850-caa94b5c8c2d",
 							"host": [
 								"{{url}}"
 							],
@@ -233,7 +251,7 @@
 								"api",
 								"{{v1}}",
 								"{{functionsPath}}",
-								"2313"
+								"ce317d33-705f-4e70-b850-caa94b5c8c2d"
 							]
 						}
 					},

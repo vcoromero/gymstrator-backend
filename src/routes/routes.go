@@ -11,6 +11,7 @@ func RegisterRoutes(r *mux.Router) {
 	apiRouterV1 := r.PathPrefix("/api/v1").Subrouter()
 	rolesRouter := apiRouterV1.PathPrefix("/roles").Subrouter()
 	functionsRouter := apiRouterV1.PathPrefix("/functions").Subrouter()
+	roleFunctionsRouter := apiRouterV1.PathPrefix("/role-functions").Subrouter()
 
 	rolesRouter.HandleFunc("/{id}", handlers.GetRole).Methods("GET")
 	rolesRouter.HandleFunc("", handlers.GetRoles).Methods("GET")
@@ -23,6 +24,12 @@ func RegisterRoutes(r *mux.Router) {
 	functionsRouter.HandleFunc("", handlers.CreateFunction).Methods("POST")
 	functionsRouter.HandleFunc("/{id}", handlers.UpdateFunction).Methods("PUT")
 	functionsRouter.HandleFunc("/{id}", handlers.DeleteFunction).Methods("DELETE")
+
+	roleFunctionsRouter.HandleFunc("/{id}", handlers.GetFunctionsByRole).Methods("GET")
+	roleFunctionsRouter.HandleFunc("/{id}/many", handlers.AddManyFunctionsToRole).Methods("POST")
+	roleFunctionsRouter.HandleFunc("/{id}", handlers.AddFunctionToRole).Methods("POST")
+	roleFunctionsRouter.HandleFunc("/{id}/many", handlers.RemoveManyFunctionsOnRole).Methods("DELETE")
+	roleFunctionsRouter.HandleFunc("/{id}", handlers.RemoveFunctionOnRole).Methods("DELETE")
 
 	logRoutes(r)
 }

@@ -18,7 +18,11 @@ func RegisterRoutes(r *mux.Router) {
 	rolesRouter.HandleFunc("/{id}", handlers.UpdateRole).Methods("PUT")
 	rolesRouter.HandleFunc("/{id}", handlers.DeleteRole).Methods("DELETE")
 
-	functionsRouter.HandleFunc("", handlers.GetFunction).Methods("GET")
+	functionsRouter.HandleFunc("/{id}", handlers.GetFunction).Methods("GET")
+	functionsRouter.HandleFunc("", handlers.GetFunctions).Methods("GET")
+	functionsRouter.HandleFunc("", handlers.CreateFunction).Methods("POST")
+	functionsRouter.HandleFunc("/{id}", handlers.UpdateFunction).Methods("PUT")
+	functionsRouter.HandleFunc("/{id}", handlers.DeleteFunction).Methods("DELETE")
 
 	logRoutes(r)
 }
